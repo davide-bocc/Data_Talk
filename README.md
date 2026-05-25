@@ -11,8 +11,8 @@ rather than the typical data collection and analysis exercises.
 
 ---
 
-> Overview tab — schema, key insights and sales trends over time
-![DataTalk — Overview](assets/overview.png)
+> Overview tab - schema, key insights and sales trends over time
+![DataTalk - Overview](assets/overview.PNG)
 
 ---
 
