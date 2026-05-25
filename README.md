@@ -11,7 +11,9 @@ rather than the typical data collection and analysis exercises.
 
 ---
 
-> Overview tab - schema, key insights and sales trends over time
+**Live demo → [data-talk.streamlit.app](https://data-talk.streamlit.app)**
+
+> Sample screen — the app automatically analyses an Italian retail sales dataset
 ![DataTalk - Overview](assets/overview.PNG)
 
 ---
