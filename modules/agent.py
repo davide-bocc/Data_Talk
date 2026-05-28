@@ -283,7 +283,7 @@ _SYSTEM_PROMPT = textwrap.dedent("""
     - Format numbers with thousands separators and 2 decimal places where appropriate.
     - Keep answers concise but complete. Use bullet points for lists.
     - If you notice an important insight the user did not ask about, briefly mention it.
-    - Always respond in the same language the user writes in.
+    - Always respond in Italian by default, unless the user writes in a different language - in that case, match their language.
     - If the dataset is sampled, acknowledge this limitation when the answer
       might differ on the full data.
 """).strip()
@@ -408,30 +408,32 @@ def suggest_questions(dataset: LoadedDataset, report: AnalysisReport) -> list[st
 
     # Returns up to 8 relevant starter questions based on the actual
     # content of the dataset. Shown in Streamlit as clickable buttons.
+    # Questions are in Italian by default to make the app more accessible
+    # for Italian-speaking users testing the demo.
 
     questions: list[str] = [
-        "Give me a general overview of this dataset.",
-        "Are there any data quality issues I should know about?",
+        "Dammi una panoramica generale del dataset.",
+        "Ci sono problemi di qualità nei dati?",
     ]
 
     if dataset.numeric_cols:
         col = dataset.numeric_cols[0]
-        questions.append(f"What is the distribution of '{col}'?")
-        questions.append(f"Are there outliers in '{col}'?")
+        questions.append(f"Com'è distribuita la colonna '{col}'?")
+        questions.append(f"Ci sono valori anomali in '{col}'?")
 
     if dataset.categorical_cols:
         col = dataset.categorical_cols[0]
-        questions.append(f"What are the most common values in '{col}'?")
+        questions.append(f"Quali sono i valori più frequenti in '{col}'?")
 
     if len(dataset.numeric_cols) >= 2:
         a, b = dataset.numeric_cols[0], dataset.numeric_cols[1]
-        questions.append(f"Is there a correlation between '{a}' and '{b}'?")
+        questions.append(f"C'è una correlazione tra '{a}' e '{b}'?")
 
     if dataset.datetime_cols and dataset.numeric_cols:
         v = dataset.numeric_cols[0]
-        questions.append(f"How does '{v}' trend over time?")
+        questions.append(f"Come cambia '{v}' nel tempo?")
 
     if not report.anomalies_df.empty:
-        questions.append("Tell me about the anomalies found in the data.")
+        questions.append("Parlami delle anomalie trovate nei dati.")
 
     return questions[:8]
